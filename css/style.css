@@ -1,0 +1,2589 @@
+/* ==========================================================================
+   ATLANTE STORICO INTERATTIVO DELLA PRIMA GUERRA MONDIALE (1914 - 1918)
+   Foglio di Stile Principale - Progettato per Scuola Secondaria di 1° Grado & LIM
+   Stile: Cartografia Storica Museale, Pergamena d'Epoca, Massima Leggibilità
+   ========================================================================== */
+
+:root {
+  /* Palette Colori Storici Museali */
+  --bg-parchment: #fcf9f2;
+  --bg-parchment-deep: #f5eedc;
+  --bg-card: #ffffff;
+  --border-antique: #d8c8b0;
+  --border-gold: #b45309;
+  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  /* Schieramenti della Grande Guerra */
+  --color-allies: #1d4ed8;       /* Triplice Intesa & Alleati (Blu Francia/UK) */
+  --color-allies-light: #dbeafe;
+  --color-central: #b91c1c;      /* Imperi Centrali (Rosso Imperiale Germania/Austria) */
+  --color-central-light: #fee2e2;
+  --color-italy: #15803d;        /* Regno d'Italia (Verde Tricolore) */
+  --color-italy-gold: #ca8a04;
+  --color-neutral: #94a3b8;      /* Nazioni Neutrali (Grigio Perla) */
+  
+  /* Topografia e Fiumi */
+  --sea-color: #cde4f7;          /* Azzurro Cartografico d'Epoca */
+  --river-color: #0284c7;        /* Blu Fiumi Strategici (Piave, Isonzo, Marna) */
+  --trench-color: #7f1d1d;       /* Terra Bruciata & Filo Spinato */
+  
+  /* Interfaccia */
+  --header-height: 64px;
+  --timeline-height: 72px;
+  --theater-bar-height: 44px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.18);
+  --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset Globale */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-parchment);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ==========================================================================
+   HEADER PRINCIPALE
+   ========================================================================== */
+.app-header {
+  min-height: 56px;
+  height: auto;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 1.25rem;
+  border-bottom: 2px solid var(--border-gold);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 60;
+  flex-shrink: 0;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  font-size: 1.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-text h1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f8fafc;
+}
+
+.brand-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: var(--color-italy);
+  color: #ffffff;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.brand-text p {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  margin-top: 0.1rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.header-nav-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.25rem 0.45rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  flex-wrap: wrap;
+}
+
+.header-nav-cluster.nav-tools {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.cluster-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #fbbf24;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 0.3rem;
+  user-select: none;
+}
+
+/* ==========================================================================
+   PULSANTI GENERALI & VARIANTI
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn.active-modal-tab {
+  outline: 2px solid #facc15 !important;
+  outline-offset: 1px;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.6) !important;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+}
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-italy {
+  background: linear-gradient(135deg, #15803d, #166534);
+  color: #ffffff;
+  border-color: #14532d;
+  box-shadow: 0 2px 4px rgba(21, 128, 61, 0.25);
+}
+.btn-italy:hover {
+  background: linear-gradient(135deg, #166534, #14532d);
+}
+
+.btn-amber {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff;
+  border-color: #92400e;
+}
+.btn-amber:hover {
+  background: linear-gradient(135deg, #b45309, #92400e);
+}
+
+.btn-light {
+  background-color: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+.btn-light:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #f8fafc;
+  border-color: #475569;
+}
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #94a3b8;
+}
+
+.btn.active {
+  background-color: var(--color-italy);
+  color: #ffffff;
+  border-color: #14532d;
+}
+
+/* ==========================================================================
+   BARRA CRONOLOGICA (TIMELINE SLIDER)
+   ========================================================================== */
+.timeline-bar {
+  height: var(--timeline-height);
+  background-color: var(--bg-parchment-deep);
+  border-bottom: 1px solid var(--border-antique);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  gap: 1rem;
+  flex-shrink: 0;
+  z-index: 40;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.timeline-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 820px;
+  justify-content: center;
+}
+
+.timeline-step-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.6rem;
+  background: #ffffff;
+  border: 1.5px solid var(--border-antique);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+
+.timeline-step-btn .year {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.timeline-step-btn .step-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.timeline-step-btn:hover {
+  border-color: var(--border-gold);
+  background-color: #fffbeb;
+  transform: translateY(-1px);
+}
+
+.timeline-step-btn.active {
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+  border-color: #1d4ed8;
+  box-shadow: 0 3px 8px rgba(30, 58, 138, 0.35);
+  transform: translateY(-2px);
+}
+
+.timeline-step-btn.active .year,
+.timeline-step-btn.active .step-desc {
+  color: #ffffff;
+}
+
+.audio-narration-toggle {
+  display: flex;
+  align-items: center;
+}
+
+/* Stili per la Lettura Vocale Naturale & Feedback Audio */
+.btn-voice-playing {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border-color: #059669 !important;
+  font-weight: 700 !important;
+  animation: pulseVoice 1.6s infinite ease-in-out;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5) !important;
+}
+
+@keyframes pulseVoice {
+  0% { transform: scale(1); box-shadow: 0 0 6px rgba(16, 185, 129, 0.4); }
+  50% { transform: scale(1.03); box-shadow: 0 0 16px rgba(16, 185, 129, 0.85); }
+  100% { transform: scale(1); box-shadow: 0 0 6px rgba(16, 185, 129, 0.4); }
+}
+
+#btn-toggle-voice.active {
+  background: #0f172a !important;
+  color: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* ==========================================================================
+   SUB-BARRA: FILTRI TEATRI & LIVELLI MAPPA
+   ========================================================================== */
+.theaters-filter-bar {
+  min-height: 44px;
+  height: auto;
+  background-color: #f8fafc;
+  border-bottom: 1.5px solid var(--border-antique);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  z-index: 30;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.theaters-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.theaters-label {
+  font-weight: 800;
+  color: #1e293b;
+  font-size: 0.82rem;
+  margin-right: 0.25rem;
+  user-select: none;
+}
+
+.theater-btn {
+  padding: 0.32rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: #334155;
+  transition: all var(--transition-smooth);
+  white-space: nowrap;
+}
+
+.theater-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #64748b;
+  transform: translateY(-1px);
+}
+
+.theater-btn.active {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.3);
+}
+
+.theater-btn.btn-theater-italy.active {
+  background: linear-gradient(135deg, #15803d, #14532d);
+  border-color: #14532d;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(21, 128, 61, 0.3);
+}
+
+.theater-btn.btn-theater-trench.active {
+  background: linear-gradient(135deg, #b45309, #78350f);
+  border-color: #78350f;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.3);
+}
+
+.map-layer-toggles {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.map-badge-offline {
+  font-size: 0.76rem;
+  color: #475569;
+  font-weight: 700;
+  background: #e2e8f0;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+  accent-color: var(--color-italy);
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+/* ==========================================================================
+   AREA CENTRALE: MAPPA CARTOGRAFICA + PANNELLO LATERALE
+   ========================================================================== */
+.main-stage {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-viewport-wrapper {
+  flex: 1;
+  position: relative;
+  background-color: var(--sea-color);
+  overflow: hidden;
+}
+
+.interactive-map-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--sea-color);
+}
+
+.europe-main-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Tooltip Flottante Anti-Sovrapposizione */
+.map-floating-tooltip {
+  position: absolute;
+  pointer-events: none !important;
+  background: rgba(15, 23, 42, 0.94);
+  color: #f8fafc;
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #475569;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 320px;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* Controlli Flottanti sulla Mappa */
+.map-floating-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.map-floating-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.35rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-antique);
+  backdrop-filter: blur(4px);
+}
+
+.map-ctrl-btn {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: #1e293b;
+  transition: all var(--transition-smooth);
+}
+
+.map-ctrl-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.map-ctrl-btn.map-btn-icon {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.map-ctrl-btn.ctrl-italy {
+  background: linear-gradient(135deg, #15803d, #166534);
+  color: #ffffff;
+  border-color: #14532d;
+}
+
+.map-watermark-tag {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-antique);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.78rem;
+  color: #334155;
+  backdrop-filter: blur(4px);
+}
+
+/* ==========================================================================
+   PANNELLO LATERALE DELLA STORIA (STORY PANEL)
+   ========================================================================== */
+.story-panel {
+  width: 420px;
+  background-color: #ffffff;
+  border-left: 2px solid var(--border-antique);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 35;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.06);
+  transition: margin-right var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.story-panel.collapsed {
+  margin-right: -420px;
+}
+
+.btn-toggle-panel {
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 56px;
+  background-color: #ffffff;
+  border: 1.5px solid var(--border-antique);
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #475569;
+  box-shadow: -3px 0 6px rgba(0,0,0,0.08);
+  z-index: 36;
+}
+
+.btn-toggle-panel:hover {
+  background-color: var(--bg-parchment);
+  color: var(--color-italy);
+}
+
+.panel-header {
+  padding: 1.15rem 1.25rem 0.85rem;
+  background: linear-gradient(to bottom, #fffbeb, #ffffff);
+  border-bottom: 1px solid var(--border-antique);
+}
+
+.panel-header h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.3;
+}
+
+.panel-period-badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--border-gold);
+  color: #ffffff;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.panel-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+/* Immagine / Banner Storico nel Pannello */
+.panel-hero-box {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-antique);
+  box-shadow: var(--shadow-sm);
+  background-color: #f8fafc;
+}
+
+.panel-hero-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.panel-hero-caption {
+  font-size: 0.74rem;
+  color: #475569;
+  padding: 0.35rem 0.65rem;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+
+.panel-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.95rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-card.card-italy {
+  border-left: 4px solid var(--color-italy);
+  background: linear-gradient(to right, #f0fdf4, #ffffff);
+}
+
+.panel-card.card-curiosity {
+  border-left: 4px solid var(--border-gold);
+  background: linear-gradient(to right, #fffbeb, #ffffff);
+}
+
+.panel-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.panel-card-text {
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.panel-card-text strong {
+  color: #0f172a;
+}
+
+/* Griglia Schieramenti nel Pannello */
+.alliances-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+.alliance-col {
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+}
+
+.alliance-col.allies {
+  background-color: var(--color-allies-light);
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+}
+
+.alliance-col.central {
+  background-color: var(--color-central-light);
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.alliance-col strong {
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Lista Battaglie Chiave nel Pannello */
+.panel-battles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+}
+
+.battle-item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  text-align: left;
+}
+
+.battle-item-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateX(2px);
+}
+
+.battle-item-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.battle-item-date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   MODALI DIDATTICHE & POPUP
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999 !important;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+  backdrop-filter: blur(6px);
+}
+
+.modal-backdrop.open,
+.modal-backdrop.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  display: flex !important;
+}
+
+.modal-dialog {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  border: 1.5px solid var(--border-antique);
+  overflow: hidden;
+  transform: scale(0.95);
+  transition: transform var(--transition-smooth);
+}
+
+.modal-backdrop.open .modal-dialog,
+.modal-backdrop.active .modal-dialog {
+  transform: scale(1) !important;
+}
+
+.modal-header {
+  padding: 1.15rem 1.5rem;
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--border-gold);
+}
+
+.modal-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-smooth);
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   SDOPPIATORE CONFINI 1914 VS 1919 (CURTAIN SLIDER)
+   ========================================================================== */
+.curtain-slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.curtain-slider-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid var(--border-gold);
+  box-shadow: var(--shadow-md);
+  background-color: var(--sea-color);
+  user-select: none;
+}
+
+.curtain-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.curtain-layer svg,
+.curtain-layer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.curtain-layer-1919 {
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  border-right: 2px solid #ffffff;
+}
+
+.curtain-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  cursor: ew-resize;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.curtain-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-italy);
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.curtain-badge {
+  position: absolute;
+  top: 1rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+}
+
+.curtain-badge.badge-1914 {
+  right: 1rem;
+  background-color: #b91c1c;
+}
+
+.curtain-badge.badge-1919 {
+  left: 1rem;
+  background-color: var(--color-italy);
+}
+
+.curtain-slider-bar-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #f1f5f9;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+}
+
+.curtain-range-input {
+  flex: 1;
+  accent-color: var(--color-italy);
+  cursor: pointer;
+}
+
+.curtain-instructions {
+  font-size: 0.82rem;
+  color: #475569;
+  text-align: center;
+}
+
+/* ==========================================================================
+   VISUALIZZAZIONE OTTIMALE IMMAGINI APPROFONDIMENTI (100% VISIBILI, SENZA TAGLI)
+   ========================================================================== */
+.notebook-render-box {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 0.5rem 0.25rem;
+}
+
+.notebook-top {
+  border-bottom: 2px solid var(--border-gold);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.notebook-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+}
+
+.notebook-sub {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.notebook-text {
+  font-size: 0.95rem;
+  line-height: 1.68;
+  color: #1e293b;
+  background: #fdfbf7;
+  padding: 1.25rem;
+  border-left: 4px solid var(--color-italy);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.notebook-media {
+  margin: 1.15rem 0;
+  background: #111827;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid var(--border-gold);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.notebook-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain !important; /* Si vede sempre per intero al 100%, mai tagliata */
+  display: block;
+  background: #0f172a;
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
+}
+
+.notebook-img:hover {
+  transform: scale(1.015);
+}
+
+.notebook-caption {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: rgba(15, 23, 42, 0.95);
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sdoppiatore 1914 vs 1919 */
+.comparison-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 820px) {
+  .comparison-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comp-col {
+  background: #f8fafc;
+  border: 1.5px solid var(--border-antique);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-header-badge {
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.comp-header-badge.badge-1914 {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #f87171;
+}
+
+.comp-header-badge.badge-1919 {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #4ade80;
+}
+
+.comp-img-wrap {
+  width: 100%;
+  height: 250px;
+  background: #0f172a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.85rem;
+  border: 1.5px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+}
+
+.comp-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important; /* Si vede sempre per intero */
+  display: block;
+}
+
+.comp-list {
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.comp-list li {
+  margin-bottom: 0.45rem;
+}
+
+/* Lightbox Universale per Immagini a Schermo Intero */
+.image-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 100000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+
+.image-lightbox-overlay.active {
+  display: flex;
+}
+
+.lightbox-content-box {
+  position: relative;
+  max-width: 95vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-img {
+  max-width: 95vw;
+  max-height: 84vh;
+  object-fit: contain !important;
+  border-radius: 6px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--border-gold);
+}
+
+.lightbox-caption {
+  margin-top: 0.75rem;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+}
+
+.lightbox-close-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #ef4444;
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* ==========================================================================
+   MODALITÀ LIM (LAVAGNA INTERATTIVA MULTIMEDIALE)
+   ========================================================================== */
+body.lim-mode {
+  --header-height: 74px;
+  --timeline-height: 86px;
+  --theater-bar-height: 52px;
+}
+
+body.lim-mode .btn,
+body.lim-mode .timeline-step-btn,
+body.lim-mode .theater-btn {
+  padding: 0.65rem 1.1rem;
+  font-size: 0.95rem;
+  border-width: 2px;
+}
+
+body.lim-mode .panel-card-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+body.lim-mode .brand-text h1 {
+  font-size: 1.35rem;
+}
+
+/* ==========================================================================
+   ANIMAZIONI SVG FRECCE & TRINCEE
+   ========================================================================== */
+@keyframes dashAnimation {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animated-troop-path {
+  animation: dashAnimation 1.5s linear infinite;
+}
+
+.svg-battle-pin {
+  transition: transform 0.2s ease;
+}
+
+.svg-battle-pin:hover {
+  transform: scale(1.2);
+}
+
+.svg-battle-pin circle:first-child {
+  pointer-events: none !important;
+}
+
+
+/* ==========================================================================
+   STILI NUOVI MODULI DIDATTICI & MOTORE "GOD'S EYE VIEW"
+   ========================================================================== */
+
+/* 1. Header Buttons & Badges */
+.brand-badge.badge-hud {
+  background: #0284c7;
+  color: #f0f9ff;
+  border: 1px solid #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.btn-rea {
+  background: linear-gradient(135deg, #0284c7, #1e3a8a);
+  color: #ffffff;
+  border-color: #0369a1;
+}
+.btn-rea:hover {
+  background: linear-gradient(135deg, #0369a1, #172554);
+}
+
+.btn-ambitious {
+  background: linear-gradient(135deg, #7c3aed, #4338ca);
+  color: #ffffff;
+  border-color: #6d28d9;
+}
+.btn-ambitious:hover {
+  background: linear-gradient(135deg, #6d28d9, #3730a3);
+}
+
+.btn-trench {
+  background: linear-gradient(135deg, #9a3412, #78350f);
+  color: #ffffff;
+  border-color: #7c2d12;
+}
+.btn-trench:hover {
+  background: linear-gradient(135deg, #7c2d12, #451a03);
+}
+
+.btn-backpack {
+  background: linear-gradient(135deg, #15803d, #14532d);
+  color: #ffffff;
+  border-color: #166534;
+}
+.btn-backpack:hover {
+  background: linear-gradient(135deg, #166534, #052e16);
+}
+
+.btn-human {
+  background: linear-gradient(135deg, #be123c, #881337);
+  color: #ffffff;
+  border-color: #9f1239;
+}
+.btn-human:hover {
+  background: linear-gradient(135deg, #9f1239, #4c0519);
+}
+
+/* 2. Modal Header Gradients */
+.header-rea {
+  background: linear-gradient(135deg, #0284c7, #1e3a8a) !important;
+}
+.header-ambitious {
+  background: linear-gradient(135deg, #7c3aed, #4338ca) !important;
+}
+.header-trench {
+  background: linear-gradient(135deg, #9a3412, #78350f) !important;
+}
+.header-backpack {
+  background: linear-gradient(135deg, #15803d, #14532d) !important;
+}
+.header-human {
+  background: linear-gradient(135deg, #be123c, #881337) !important;
+}
+
+/* 3. Sub Navigation Tabs */
+.sub-nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.65rem;
+}
+
+.sub-tab-btn {
+  padding: 0.45rem 0.95rem;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  color: #334155;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+.sub-tab-btn:hover {
+  background: #e2e8f0;
+}
+.sub-tab-btn.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 2px 5px rgba(30, 58, 138, 0.25);
+}
+
+/* 4. REA: Ingranaggi delle Cause */
+.causes-intro {
+  margin-bottom: 1.25rem;
+}
+.causes-intro h4 {
+  font-size: 1.15rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+.causes-intro p {
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.gears-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1rem;
+}
+
+.gear-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gear-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: #cbd5e1;
+}
+
+.gear-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+.gear-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.gear-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.gear-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+.gear-desc {
+  font-size: 0.85rem;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 0.85rem;
+}
+.gear-qa {
+  background: #f8fafc;
+  border-left: 3px solid #0284c7;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+.gear-qa strong {
+  color: #0369a1;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.gear-qa p {
+  color: #475569;
+}
+
+/* Domino del Luglio 1914 */
+.domino-stepper-controls {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.domino-step-btn {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.5rem 0.65rem;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+.domino-step-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+}
+
+.domino-box {
+  background: #ffffff;
+  border: 2px solid #0284c7;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+.domino-top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.domino-actor {
+  color: #0369a1;
+}
+.domino-date {
+  color: #64748b;
+}
+.domino-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+.domino-text {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 0.85rem;
+}
+.domino-impact {
+  background: #fef2f2;
+  border-left: 4px solid #dc2626;
+  padding: 0.65rem 0.9rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: #991b1b;
+}
+
+/* What If */
+.whatif-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.whatif-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+}
+.whatif-card h5 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #7c3aed;
+  margin-bottom: 0.5rem;
+}
+.whatif-hypo {
+  background: #f5f3ff;
+  border-left: 3px solid #7c3aed;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #5b21b6;
+  margin-bottom: 0.65rem;
+}
+.whatif-reality {
+  background: #f8fafc;
+  padding: 0.65rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+/* 5. Be Ambitious: Fonti e Poesia */
+.sources-intro {
+  margin-bottom: 1.25rem;
+}
+.sources-intro h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+.sources-intro p {
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.source-document-card {
+  background: #ffffff;
+  border: 1.5px solid #d8c8b0;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+}
+.doc-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 0.2rem;
+}
+.doc-meta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #78350f;
+}
+.btn-outline-dark {
+  background: transparent;
+  border: 1.5px solid #1e3a8a;
+  color: #1e3a8a;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.btn-outline-dark:hover {
+  background: #1e3a8a;
+  color: #ffffff;
+}
+.doc-summary {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+.doc-quote-parchment {
+  background: #fdfbf7;
+  border-left: 4px solid #b45309;
+  border: 1px solid #e7dbcd;
+  border-left-width: 4px;
+  padding: 0.85rem 1.1rem;
+  border-radius: 6px;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  color: #292524;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+.doc-didactic-note {
+  background: #f0fdf4;
+  border-left: 3.5px solid #15803d;
+  padding: 0.6rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #14532d;
+  line-height: 1.5;
+}
+
+/* 6. Spaccato Trincea */
+.trench-modal-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 820px) {
+  .trench-modal-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.trench-diagram-col {
+  background: #1e293b;
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+}
+.trench-svg-wrap {
+  width: 100%;
+  height: 290px;
+}
+.trench-cross-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+}
+.svg-trench-pin {
+  cursor: pointer;
+  pointer-events: all;
+}
+.svg-trench-pin circle {
+  transition: r 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), stroke-width 0.2s ease, fill 0.2s ease, filter 0.2s ease;
+  transform-origin: center;
+}
+.svg-trench-pin:hover circle {
+  r: 18;
+  stroke: #facc15 !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.8));
+}
+.svg-trench-pin text {
+  pointer-events: none; /* Il testo non interferisce con l'hover del cerchio */
+  user-select: none;
+}
+.svg-trench-pin.active-pin circle {
+  fill: #16a34a !important;
+  stroke: #fde047 !important;
+  stroke-width: 3.5px !important;
+  r: 17;
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.7));
+}
+
+.trench-detail-col {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+}
+.trench-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 0.65rem;
+}
+.trench-icon {
+  font-size: 2.2rem;
+}
+.trench-card-header h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.trench-depth-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #78350f;
+  background: #fef3c7;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* 7. Zaino e Calcolatore Affardellamento */
+.backpack-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 820px) {
+  .backpack-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.weight-meter-card {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.weight-meter-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+.weight-meter-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.5rem;
+}
+.weight-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #15803d;
+}
+.weight-value.danger-weight {
+  color: #dc2626;
+}
+.weight-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+.items-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+.kit-item-row {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  transition: all 0.2s ease;
+}
+.kit-item-row.item-active {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+.kit-item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  width: 100%;
+}
+.kit-icon {
+  font-size: 1.35rem;
+}
+.kit-desc-wrap {
+  flex: 1;
+}
+.kit-desc-wrap strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+.kit-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: block;
+}
+.kit-weight-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.marches-info-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.march-quote-box {
+  background: #fdfbf7;
+  border-left: 4px solid #b45309;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  font-family: Georgia, serif;
+  font-size: 0.88rem;
+  color: #451a03;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+/* 8. Fatto Umano, Tregua di Natale e Diario */
+.humanity-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.15rem;
+  color: #ffffff;
+}
+.western-christmas {
+  background: linear-gradient(135deg, #1e3a8a, #0f172a);
+}
+.candle-glow {
+  font-size: 2.2rem;
+  animation: pulseGlow 2s infinite alternate;
+}
+@keyframes pulseGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px #facc15); }
+  100% { transform: scale(1.15); filter: drop-shadow(0 0 15px #f59e0b); }
+}
+
+.italian-christmas {
+  background: linear-gradient(135deg, #15803d, #14532d);
+}
+.shell-shock-banner {
+  background: linear-gradient(135deg, #475569, #1e293b);
+}
+
+.humanity-banner h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+.humanity-banner span {
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+.humanity-body-text {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.humanity-alert-box {
+  background: #fef2f2;
+  border-left: 4px solid #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #991b1b;
+}
+.humanity-lesson-box {
+  background: #f0fdf4;
+  border-left: 4px solid #16a34a;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #14532d;
+}
+
+/* Diario del Fante */
+.diary-wrapper {
+  background: #ffffff;
+  border: 2px solid #d8c8b0;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.diary-book-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1.5px solid #e7dbcd;
+  padding-bottom: 0.65rem;
+}
+.diary-book-header h4 {
+  font-size: 1.1rem;
+  color: #1e3a8a;
+  font-weight: 800;
+}
+.diary-page-indicator {
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  color: #475569;
+}
+.diary-page-parchment {
+  background: #fcf9ee;
+  border: 1px solid #e2d7c5;
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+  margin-bottom: 1.25rem;
+}
+.diary-chapter-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #78350f;
+  margin-bottom: 0.35rem;
+}
+.diary-date {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.85rem;
+}
+.diary-text {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  color: #292524;
+  line-height: 1.7;
+}
+.diary-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 9. Gauntlet Loop: Sfida lo Storico */
+.quiz-step-card {
+  padding: 0.5rem 0;
+}
+.quiz-top-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.quiz-level-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.quiz-level-badge.level-1 {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.quiz-level-badge.level-2 {
+  background: #fef3c7;
+  color: #92400e;
+}
+.quiz-level-badge.level-3 {
+  background: #fce7f3;
+  color: #9d174d;
+}
+.quiz-counter {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+}
+.quiz-score-badge {
+  font-size: 0.85rem;
+  font-weight: 800;
+  background: #dcfce7;
+  color: #166534;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+.quiz-question-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+}
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.quiz-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-size: 0.92rem;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.quiz-option-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+.opt-letter {
+  width: 26px;
+  height: 26px;
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.quiz-option-btn.correct {
+  background: #dcfce7 !important;
+  border-color: #16a34a !important;
+  color: #14532d !important;
+}
+.quiz-option-btn.wrong {
+  background: #fee2e2 !important;
+  border-color: #dc2626 !important;
+  color: #7f1d1d !important;
+}
+
+.quiz-feedback-box {
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.feedback-correct {
+  background: #f0fdf4;
+  border-left: 4px solid #16a34a;
+  color: #14532d;
+}
+.feedback-wrong {
+  background: #fef2f2;
+  border-left: 4px solid #dc2626;
+  color: #991b1b;
+}
+
+/* Diploma Finale */
+.diploma-card {
+  padding: 1rem 0;
+  text-align: center;
+}
+.diploma-border {
+  border: 3px double #b45309;
+  background: #fcf9ee;
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+.diploma-seal {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.diploma-title {
+  font-size: 1.6rem;
+  font-family: Georgia, serif;
+  font-weight: 800;
+  color: #78350f;
+  letter-spacing: 1px;
+}
+.diploma-sub {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 1.25rem;
+}
+.diploma-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin: 1.25rem 0;
+}
+.score-circle {
+  background: #ffffff;
+  border: 2px solid #b45309;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-num {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #b45309;
+  line-height: 1;
+}
+.score-den {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+}
+.diploma-grade {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #15803d;
+  max-width: 280px;
+  text-align: left;
+}
+
+/* 10. God's Eye View: Modalità Tattica Notturna (HUD / FLIR) */
+.map-style-select {
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.map-hud-telemetry {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #38bdf8;
+  display: flex;
+  gap: 0.85rem;
+  z-index: 15;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.interactive-map-frame.tactical_night-mode {
+  background-color: #050b14;
+}
+.interactive-map-frame.tactical_night-mode svg {
+  filter: contrast(1.15) brightness(1.05);
+}
+.interactive-map-frame.tactical_night-mode #layer-grid line {
+  stroke: #0284c7 !important;
+  opacity: 0.4 !important;
+}
+.interactive-map-frame.tactical_night-mode .map-hud-telemetry {
+  background: rgba(5, 11, 20, 0.92);
+  border-color: #06b6d4;
+  color: #22d3ee;
+}
+.interactive-map-frame.tactical_night-mode .map-watermark-tag {
+  background: rgba(5, 11, 20, 0.9);
+  color: #38bdf8;
+  border-color: #0284c7;
+}
+
+.svg-alpine-peak {
+  transition: transform 0.2s ease;
+}
+.svg-alpine-peak:hover {
+  transform: scale(1.3);
+}
+
+
+/* ==========================================================================
+   STILI MOTORE CARTOGRAFICO RASTER STORICO "GOD'S EYE VIEW" (NO VETTORIALE)
+   ========================================================================== */
+
+.gods-eye-map-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #0b0f19;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Barra Superiore Selettore Carte */
+.map-selector-topbar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 25;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.map-selector-pills {
+  display: flex;
+  gap: 0.45rem;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(10px);
+  padding: 0.35rem 0.6rem;
+  border-radius: 30px;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  max-width: 95%;
+  overflow-x: auto;
+}
+
+.map-pill-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.map-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.map-pill-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.5);
+}
+.map-pill-btn.btn-pill-italy.active {
+  background: #15803d;
+  box-shadow: 0 2px 10px rgba(21, 128, 61, 0.5);
+}
+.map-pill-btn.btn-pill-trench.active {
+  background: #b45309;
+  box-shadow: 0 2px 10px rgba(180, 83, 9, 0.5);
+}
+
+/* 2. Viewport Interattivo */
+.map-interactive-viewport {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  background: #090d16;
+}
+.map-interactive-viewport:active {
+  cursor: grabbing;
+}
+
+.map-canvas-surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  display: inline-block;
+}
+
+.main-historical-raster {
+  display: block;
+  max-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.hotspots-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 3. Hotspots Punti Tattici Discreti */
+.hotspot-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 10;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.hotspot-pin:hover {
+  transform: translate(-50%, -50%) scale(1.35);
+  z-index: 30;
+  opacity: 1 !important;
+}
+
+.hotspot-pin.pin-active-phase {
+  z-index: 20;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+.hotspot-pin.pin-active-phase:hover {
+  transform: translate(-50%, -50%) scale(1.4);
+}
+
+.hotspot-pin.pin-secondary {
+  opacity: 0.55;
+  transform: translate(-50%, -50%) scale(0.88);
+}
+.hotspot-pin.pin-secondary .pin-radar-ring {
+  display: none;
+}
+.hotspot-pin.pin-secondary .pin-label {
+  opacity: 0.75;
+}
+
+.pin-radar-ring {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #ef4444;
+  opacity: 0.7;
+  animation: radarWave 2s infinite ease-out;
+}
+.pin-radar-ring.active-pulse {
+  animation: radarWave 1.6s infinite ease-out;
+  border-width: 2.5px;
+}
+
+@keyframes radarWave {
+  0% { transform: scale(0.4); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.pin-core {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.2s ease;
+}
+.pin-core.core-bright {
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.95), 0 0 8px currentColor;
+}
+
+/* Colori specifici per categoria di evento */
+.pin-spark .pin-core, .pin-spark .pin-radar-ring { background: #f59e0b; border-color: #f59e0b; }
+.pin-victory .pin-core, .pin-victory .pin-radar-ring { background: #10b981; border-color: #10b981; }
+.pin-human .pin-core, .pin-human .pin-radar-ring { background: #06b6d4; border-color: #06b6d4; }
+.pin-whitewar .pin-core, .pin-whitewar .pin-radar-ring { background: #38bdf8; border-color: #38bdf8; }
+.pin-peace .pin-core, .pin-peace .pin-radar-ring { background: #8b5cf6; border-color: #8b5cf6; }
+.pin-trench .pin-core, .pin-trench .pin-radar-ring { background: #d97706; border-color: #d97706; }
+
+.pin-label {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.9);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+.pin-label.label-prominent {
+  background: rgba(15, 23, 42, 0.96);
+  border-color: #facc15;
+  color: #fef08a;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 0 6px rgba(250, 204, 21, 0.3);
+}
+
+/* 4. Lente d'Ingrandimento Storica (Loupe Tool) */
+.historical-loupe {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid #b45309;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 25;
+  display: none;
+  background: #000000;
+}
+.loupe-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.loupe-zoomed-img {
+  position: absolute;
+  max-width: none;
+}
+.loupe-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.loupe-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fde047;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* 5. Tooltip HUD Flottante */
+.hotspot-hud-card {
+  position: absolute;
+  z-index: 35;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid #38bdf8;
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem;
+  color: #ffffff;
+  max-width: 320px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.hud-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 0.35rem;
+}
+.hud-card-header strong {
+  font-size: 0.92rem;
+  color: #38bdf8;
+}
+.hud-date {
+  font-size: 0.75rem;
+  color: #93c5fd;
+  font-weight: 600;
+}
+.hud-summary {
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+}
+.hud-action {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #4ade80;
+}
+
+/* 6. Strumenti Tattici Flottanti */
+.map-tactical-tools {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  z-index: 25;
+}
+.tool-btn {
+  height: 36px;
+  min-width: 36px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.tool-btn:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+.tool-btn.text-tool {
+  width: auto;
+  padding: 0 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  gap: 0.35rem;
+}
+.tool-btn.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+/* 7. Telemetria Inferiore */
+.map-bottom-telemetry {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  pointer-events: none;
+  z-index: 20;
+}
+.telemetry-item {
+  font-weight: 700;
+  color: #e2e8f0;
+}
+.telemetry-hint {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+@media (max-width: 768px) {
+  .telemetry-hint {
+    display: none;
+  }
+}

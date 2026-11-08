@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Grande Guerra (1914 - 1918) | Atlante Storico Didattico & Umano</title>
+  <meta name="description" content="Atlante storico e umano interattivo della Prima Guerra Mondiale per la Scuola Secondaria di Primo Grado: cause di fine '800, carte geografiche e tematiche 'God's Eye View', fonti storiche e letterarie (Ungaretti, Lussu), trincea 3D, zaino del fante e tregua di Natale.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       HEADER PRINCIPALE
+       ========================================== -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <div class="brand-icon">🗺️</div>
+      <div class="brand-text">
+        <h1>
+          La Grande Guerra (1914 - 1918)
+          <span class="brand-badge">Scuola Media</span>
+          <span class="brand-badge badge-hud">God's Eye View</span>
+        </h1>
+        <p>Atlante Storico, Geografico & Umano &bull; Fine '800, Cause, Fronti, Trincee e Voci</p>
+      </div>
+    </div>
+
+    <!-- Azioni Didattiche Rapide Raggruppate per Evitare Qualsiasi Sovrapposizione -->
+    <div class="header-actions">
+      <!-- Cluster 1: Laboratori Storici & Esperienziali -->
+      <div class="header-nav-cluster nav-labs">
+        <span class="cluster-label">Laboratori:</span>
+        <button id="btn-open-causes" class="btn btn-rea" title="Esplora le cause di fine '800 e il domino del luglio 1914">
+          <span class="icon">🔬</span> <span class="label">Cause & Domino</span>
+        </button>
+        <button id="btn-open-sources" class="btn btn-ambitious" title="Fonti storiche, lettere autentiche e poesie di Ungaretti e Lussu">
+          <span class="icon">📜</span> <span class="label">Fonti & Poesia</span>
+        </button>
+        <button id="btn-open-trench" class="btn btn-trench" title="Spaccato anatomico interattivo della trincea">
+          <span class="icon">🕳️</span> <span class="label">La Trincea</span>
+        </button>
+        <button id="btn-open-backpack" class="btn btn-backpack" title="I 35 kg di affardellamento dello zaino e le grandi marce">
+          <span class="icon">🎒</span> <span class="label">Zaino & Marce</span>
+        </button>
+        <button id="btn-open-humanity" class="btn btn-human" title="La Tregua di Natale, le fraternizzazioni e il diario del fante">
+          <span class="icon">🕊️</span> <span class="label">Natale & Umanità</span>
+        </button>
+        <button id="btn-open-comparison" class="btn btn-italy" title="Confronta i confini: 1914 (Imperi) vs 1919 (Versailles)">
+          <span class="icon">🔄</span> <span class="label">1914 vs 1919</span>
+        </button>
+      </div>
+
+      <!-- Cluster 2: Strumenti Didattici & Supporti -->
+      <div class="header-nav-cluster nav-tools">
+        <button id="btn-open-quiz" class="btn btn-amber" title="Sfida lo Storico a 3 livelli progressivi!">
+          <span class="icon">🏆</span> <span class="label">Quiz</span>
+        </button>
+        <button id="btn-open-notebooks" class="btn btn-light" title="Leggi i Quaderni della Storia">
+          <span class="icon">📖</span> <span class="label">Quaderni</span>
+        </button>
+        <button id="btn-open-glossary" class="btn btn-light" title="Glossario dei termini storici">
+          <span class="icon">❓</span> <span class="label">Glossario</span>
+        </button>
+        <button id="btn-toggle-voice" class="btn btn-outline" title="Assistente vocale naturale con voce italiana espressiva (Elsa / Natural)">
+          <span class="icon">🔇</span> <span class="label">Voce: OFF</span>
+        </button>
+        <button id="btn-toggle-lim" class="btn btn-outline" title="Ottimizza per la Lavagna Interattiva Multimediale (LIM)">
+          <span class="icon">🎓</span> <span class="label">LIM</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       BARRA CRONOLOGICA (TIMELINE SLIDER)
+       ========================================== -->
+  <nav class="timeline-bar" aria-label="Cronologia della Guerra">
+    <div class="playback-controls">
+      <button id="btn-prev-year" class="btn btn-light" title="Fase precedente">◀ Precedente</button>
+      <button id="btn-play-timeline" class="btn btn-primary" title="Avvia o metti in pausa il viaggio automatico nel tempo">
+        <span id="play-icon">▶</span> <span id="play-label">Avvia Viaggio nel Tempo</span>
+      </button>
+      <button id="btn-next-year" class="btn btn-light" title="Fase successiva">Successivo ▶</button>
+    </div>
+
+    <!-- Bottoni degli anni / fasi (generati dinamicamente da app.js) -->
+    <div class="timeline-steps" id="timeline-steps-container"></div>
+
+    <div class="audio-narration-toggle">
+      <button id="btn-read-aloud" class="btn btn-light" title="Ascolta ad alta voce la narrazione della fase corrente">
+        <span class="icon">📢</span> <span class="label">Ascolta la Fase</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       SUB-BARRA: SELEZIONE CARTE STORICHE AUTENTICHE (GOD'S EYE VIEW)
+       ========================================== -->
+  <div class="theaters-filter-bar">
+    <div class="theaters-buttons">
+      <span class="theaters-label">🗺️ Seleziona Carta Storica:</span>
+      <button class="theater-btn active" data-map="europa_1914">🗺️ Europa 1914 (Gli Imperi)</button>
+      <button class="theater-btn btn-theater-italy" data-map="fronte_italiano">🇮🇹 Fronte Italiano (Alpi / Piave / Isonzo)</button>
+      <button class="theater-btn" data-map="europa_1919">🔄 Europa 1919 (Pace di Versailles)</button>
+      <button class="theater-btn btn-theater-trench" data-map="trincea">🕳️ Spaccato Trincea (Vita dei Soldati)</button>
+    </div>
+
+    <div class="map-layer-toggles">
+      <span class="map-badge-offline">✦ 100% Carte Storiche Autentiche HD &bull; Nessuna Sovrapposizione Vettoriale</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       AREA CENTRALE: MAPPA + PANNELLO LATERALE
+       ========================================== -->
+  <main class="main-stage">
+    <!-- Viewport Cartografico Vettoriale (God's Eye View Engine) -->
+    <div class="map-viewport-wrapper">
+      <div id="map-container" style="width: 100%; height: 100%;"></div>
+    </div>
+
+    <!-- Pannello Laterale della Storia -->
+    <aside class="story-panel" id="story-panel">
+      <button id="btn-toggle-panel" class="btn-toggle-panel" title="Comprimi o espandi il pannello laterale">◀</button>
+
+      <div class="panel-header">
+        <h2 id="panel-phase-title">Caricamento fase...</h2>
+        <span class="panel-period-badge" id="panel-phase-period">Periodo</span>
+      </div>
+
+      <div class="panel-content-scroll">
+        <!-- Banner Storico Illustrato d'Archivio / SVG -->
+        <div id="panel-hero-illustration"></div>
+
+        <!-- Card: Narrazione Generale -->
+        <div class="panel-card">
+          <div class="panel-card-title">🌍 Cosa Accade nel Mondo</div>
+          <p class="panel-card-text" id="panel-general-narrative">Caricamento in corso...</p>
+        </div>
+
+        <!-- Card: Prospettiva Italiana -->
+        <div class="panel-card card-italy">
+          <div class="panel-card-title">🇮🇹 Il Fronte Italiano & la Nazione</div>
+          <p class="panel-card-text" id="panel-italian-perspective">Caricamento in corso...</p>
+        </div>
+
+        <!-- Card: Curiosità ed Aneddoti -->
+        <div class="panel-card card-curiosity">
+          <div class="panel-card-title">💡 Curiosità & Fatto Umano</div>
+          <p class="panel-card-text" id="panel-curiosity">Caricamento in corso...</p>
+        </div>
+
+        <!-- Schieramenti Bellici dell'Anno -->
+        <div class="panel-card">
+          <div class="panel-card-title">🤝 Schieramenti Bellici & Alleanze</div>
+          <div class="alliances-grid" id="panel-alliances-grid"></div>
+        </div>
+
+        <!-- Battaglie Salienti di quest'anno -->
+        <div class="panel-card">
+          <div class="panel-card-title">⚔️ Battaglie Salienti (Clicca per Dettagli)</div>
+          <div class="panel-battles-list" id="panel-battles-list"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ==========================================
+       MODALI INTERATTIVE
+       ========================================== -->
+
+  <!-- 1. Modale Scheda Battaglia Illustrata -->
+  <div class="modal-backdrop" id="modal-battle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-battle-title">⚔️ Nome Battaglia</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.65rem;" id="modal-battle-date"></div>
+        <div id="modal-battle-media" style="margin-bottom: 1rem;"></div>
+        
+        <div style="margin-bottom: 0.85rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 0.25rem;">📖 Cosa è successo</h4>
+          <p style="font-size: 0.9rem; color: #334155; line-height: 1.55;" id="modal-battle-summary"></p>
+        </div>
+
+        <div style="margin-bottom: 0.85rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: #15803d; margin-bottom: 0.25rem;">🎯 Perché è stata decisiva</h4>
+          <p style="font-size: 0.9rem; color: #334155; line-height: 1.55;" id="modal-battle-significance"></p>
+        </div>
+
+        <div style="background: #fffbeb; padding: 0.85rem 1rem; border-left: 4px solid #b45309; border-radius: 6px; margin-top: 1rem;">
+          <strong style="color: #b45309; font-size: 0.88rem;">💡 Lo sapevi che?</strong>
+          <p style="font-size: 0.88rem; color: #451a03; margin-top: 0.25rem;" id="modal-battle-curiosity"></p>
+        </div>
+
+        <div style="margin-top: 1.25rem; display: flex; gap: 0.5rem;">
+          <button class="btn btn-italy" id="btn-read-battle">📢 Ascolta la Scheda</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Modale Laboratorio Cause & Domino (REA - Reverse Engineer Anything) -->
+  <div class="modal-backdrop" id="modal-causes-lab">
+    <div class="modal-dialog" style="max-width: 950px;">
+      <div class="modal-header header-rea">
+        <h3>🔬 Laboratorio di De-Costruzione Storica: Le Cause di Fine '800 & Il Domino del Luglio 1914</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="sub-nav-tabs" id="causes-tabs-container">
+          <button class="sub-tab-btn active" data-tab="gears">⚙️ I 4 Ingranaggi delle Cause</button>
+          <button class="sub-tab-btn" data-tab="domino">🎲 Il Domino del Luglio 1914</button>
+          <button class="sub-tab-btn" data-tab="whatif">🔮 «Cosa Sarebbe Successo Se...?»</button>
+        </div>
+        <div id="causes-tab-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Modale Archivio Fonti, Lettere & Poesia (Be Ambitious) -->
+  <div class="modal-backdrop" id="modal-sources">
+    <div class="modal-dialog" style="max-width: 950px;">
+      <div class="modal-header header-ambitious">
+        <h3>📜 Archivio delle Fonti Storiche, Lettere dal Fronte & Poesia (Ungaretti e Lussu)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="sub-nav-tabs" id="sources-tabs-container">
+          <button class="sub-tab-btn active" data-tab="primarie">📜 Documenti Ufficiali</button>
+          <button class="sub-tab-btn" data-tab="letterarie">✍️ Poesia & Letteratura (Ungaretti/Lussu)</button>
+          <button class="sub-tab-btn" data-tab="lettere">✉️ Lettere Autentiche dei Soldati</button>
+        </div>
+        <div id="sources-tab-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Modale Dentro la Trincea (Anatomia 3D Cross-Section) -->
+  <div class="modal-backdrop" id="modal-trench">
+    <div class="modal-dialog" style="max-width: 960px;">
+      <div class="modal-header header-trench">
+        <h3>🕳️ Dentro la Trincea: Anatomia dell'Inferno & Guerra di Posizione</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="trench-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 5. Modale Nello Zaino del Fante & Le Grandi Marce -->
+  <div class="modal-backdrop" id="modal-backpack">
+    <div class="modal-dialog" style="max-width: 900px;">
+      <div class="modal-header header-backpack">
+        <h3>🎒 Nello Zaino del Fante: 35 kg sulle Spalle & Le Grandi Marce Alpine</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="backpack-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 6. Modale La Notte di Natale, Fraternizzazione & Il Fatto Umano -->
+  <div class="modal-backdrop" id="modal-humanity">
+    <div class="modal-dialog" style="max-width: 920px;">
+      <div class="modal-header header-human">
+        <h3>🕊️ La Notte di Natale, le Fraternizzazioni al Fronte e il Fatto Umano</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="sub-nav-tabs" id="humanity-tabs-container">
+          <button class="sub-tab-btn active" data-tab="truce-west">🕊️ La Tregua di Natale 1914</button>
+          <button class="sub-tab-btn" data-tab="fraternization-italy">🇮🇹 Fraternizzazione sull'Isonzo</button>
+          <button class="sub-tab-btn" data-tab="shell-shock">🧠 Lo "Scemo di Guerra" (Shell Shock)</button>
+          <button class="sub-tab-btn" data-tab="diary">📖 Il Diario del Fante Giovanni</button>
+        </div>
+        <div id="humanity-tab-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Modale Sdoppiatore Confini (1914 vs 1919) -->
+  <div class="modal-backdrop" id="modal-comparison">
+    <div class="modal-dialog" style="max-width: 920px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #15803d, #14532d);">
+        <h3>🔄 I Confini d'Europa: 1914 (Gli Imperi) vs 1919 (I Trattati di Pace)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="comparison-cards-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Modale I Quaderni della Storia -->
+  <div class="modal-backdrop" id="modal-notebooks">
+    <div class="modal-dialog" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3>📖 I Quaderni della Grande Guerra &bull; Scuola Media</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1rem;" id="notebooks-tabs-container"></div>
+        <div id="notebook-content-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Modale Glossario Didattico -->
+  <div class="modal-backdrop" id="modal-glossary">
+    <div class="modal-dialog" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3>❓ Glossario dei Termini della Grande Guerra</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 1rem;">
+          <input type="text" id="glossary-search-input" placeholder="🔍 Cerca un termine (es. Trincea, Patto di Londra, Iprite...)" style="width: 100%; padding: 0.65rem 0.9rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem;">
+        </div>
+        <div id="glossary-list-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Modale Quiz: Sfida lo Storico! (Gauntlet Loop a 3 Livelli) -->
+  <div class="modal-backdrop" id="modal-quiz">
+    <div class="modal-dialog" style="max-width: 720px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #d97706, #b45309);">
+        <h3>🏆 Mettiti alla Prova: Sfida lo Storico! (Gauntlet Loop)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="quiz-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Lightbox Ingrandimento Immagini Documentarie a Schermo Intero -->
+  <div class="image-lightbox-overlay" id="image-lightbox-modal">
+    <div class="lightbox-content-box">
+      <button class="lightbox-close-btn" id="lightbox-close-btn">&times;</button>
+      <img id="lightbox-img" class="lightbox-img" src="" alt="Documento Storico" />
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Script dell'Applicazione -->
+  <script src="js/data.js"></script>
+  <script src="js/illustrations.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
